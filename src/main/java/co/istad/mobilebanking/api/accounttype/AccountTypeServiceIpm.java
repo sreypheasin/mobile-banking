@@ -15,7 +15,7 @@ public class AccountTypeServiceIpm implements AccountTypeServices{
     private final AccountTypeMapper  accountTypeMapper;
     private final AccountTypeMapStruct accountTypeMapStruct;
     @Override
-    public List<AccountTypeDto> findAll() {
+    public List<AccountTypeDto> findAllUsers() {
         List <AccountTypes> accountTypes = accountTypeMapper.selectAllAccountTypes();
         return accountTypeMapStruct.ModelToDto(accountTypes);
     }

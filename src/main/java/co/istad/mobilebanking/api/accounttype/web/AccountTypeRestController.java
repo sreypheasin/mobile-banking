@@ -17,12 +17,12 @@ public class AccountTypeRestController {
     private final AccountTypeServices accountTypeServices;
 
     @GetMapping
-    public BaseRest<?> findAll() {
-        var accountTypeDtoList  = accountTypeServices.findAll();
+    public BaseRest<?> findAllUsers() {
+        var accountTypeDtoList  = accountTypeServices.findAllUsers();
        return BaseRest.builder()
                .status(true)
                .code(HttpStatus.OK.value())
-               .message("Success")
+               .message("Account Types have been found")
                .timestamp(LocalDateTime.now())
                .data(accountTypeDtoList)
                .build();
