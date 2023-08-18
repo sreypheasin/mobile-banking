@@ -37,6 +37,10 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
+//    TODO: pagination
+    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.4.7'
+
+
 }
 
 tasks.named('test') {

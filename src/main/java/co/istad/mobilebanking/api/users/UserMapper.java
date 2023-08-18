@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Mapper
@@ -22,10 +23,26 @@ public interface UserMapper {
     }
     )
     List<User> selectAllUsers();
+//TODO: Find User by Id
+    @ResultMap("userResult")
+    @SelectProvider(type = UserProvider.class, method = "buildFindUserByIdSql")
+    Optional<User> selectUserById (@Param("id") Integer id);
 
 //    TODO: Insert a user
-
     @InsertProvider(type = UserProvider.class, method = "buildInsertUserSql")
     @Options(useGeneratedKeys = true, keyColumn = "id",keyProperty = "id")
     void insertUser(@Param("u")  User user);
+
+//    TODO: Delete user
+//    checking is user exist or not
+
+    @Select("SELECT EXISTS(SELECT * FROM users WHERE id = #{id})")
+    Boolean isExisted (@Param("id") Integer id);
+
+    @DeleteProvider(type = UserProvider.class, method = "buildDeleteByIdSql")
+    void deletedById(@Param("id") Integer id);
+
+//    TODO: Updated status is_deleted
+    @UpdateProvider(type = UserProvider.class, method = "buildUpdateIsDeletedSql")
+    void updateIsDeleteById(@Param("id") Integer id, @Param("status") boolean status);
 }

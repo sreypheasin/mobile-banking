@@ -1,8 +1,10 @@
 package co.istad.mobilebanking.api.users;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
 
+@RequiredArgsConstructor
 public class UserProvider {
     private final String tableName = "users";
 //    TODO: select all users
@@ -10,6 +12,15 @@ public class UserProvider {
         return new SQL(){{
             SELECT("*");
             FROM(tableName);
+        }}.toString();
+    }
+
+//    TODO: Select By ID
+    public String buildFindUserByIdSql(@Param("id") Integer id){
+        return new SQL(){{
+            SELECT("*");
+            FROM(tableName);
+            WHERE("id = #{id}", "is_deleted = FALSE");
         }}.toString();
     }
 //    TODO: Insert a user
@@ -24,6 +35,23 @@ public class UserProvider {
             if(!user.getStudentCardId().isBlank()){
                 VALUES("student_card_id", "#{u.studentCardId}");
             }
+        }}.toString();
+    }
+
+//    TODO: Delete user by id
+    public String buildDeleteByIdSql(@Param("id") Integer id){
+
+        return new SQL(){{
+            DELETE_FROM(tableName);
+            WHERE("id = #{id}");
+        }}.toString();
+    }
+//    TODO: Update is deleted status
+    public String buildUpdateIsDeletedSql(@Param("id") Integer id, @Param("status") boolean status){
+        return new SQL(){{
+            UPDATE(tableName);
+            SET("is_deleted = #{status}");
+            WHERE("id = #{id}");
         }}.toString();
     }
 }

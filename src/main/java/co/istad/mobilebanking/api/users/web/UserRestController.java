@@ -24,11 +24,22 @@ public class UserRestController {
         var userDtoList = userService.findAll();
         return BaseRest.builder()
                 .status(true)
-                .code(200)
+                .code(HttpStatus.OK.value())
                 .message("User found")
                 .data(userDtoList)
                 .build();
 
+    }
+//    TODO: Find user by id
+    @GetMapping("/{id}")
+    public BaseRest<?> findUserById(@PathVariable Integer id){
+        return BaseRest.builder()
+                .status(true)
+                .code(HttpStatus.OK.value())
+                .message("User not found!")
+                .timestamp(LocalDateTime.now())
+                .data(userService.findUserById(id))
+                .build();
     }
 //    TODO: create new user
     @PostMapping
@@ -40,6 +51,31 @@ public class UserRestController {
                 .message("User has been created, successfully!")
                 .timestamp(LocalDateTime.now())
                 .data(userService.createNewUser(createUserDto))
+                .build();
+    }
+
+//    TODO: Delete user by id
+    @DeleteMapping("/{id}")
+    public BaseRest<?> deleteUserById(@PathVariable Integer id){
+        return BaseRest.builder()
+                .status(true)
+                .code(HttpStatus.OK.value())
+                .message("User has been deleted successfully...!")
+                .timestamp(LocalDateTime.now())
+                .data(userService.deleteUserById(id))
+                .build();
+    }
+
+//    TODO: Update is_deleted status
+    @PutMapping("/{id}")
+    public BaseRest<?> updateIsDeletedStatus(@PathVariable  Integer id, @RequestBody IsDeletedDto dto){
+
+        return BaseRest.builder()
+                .status(true)
+                .code(HttpStatus.OK.value())
+                .message("Updated successfully...!")
+                .timestamp(LocalDateTime.now())
+                .data(userService.updateIsDeletedStatus(id, dto.status()))
                 .build();
     }
 }

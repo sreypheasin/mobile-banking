@@ -7,10 +7,16 @@ import java.util.List;
 
 public interface UserService {
 
-//    TODO: Find all users
+//    TODO: Find
     List<UserDto> findAll();
+    UserDto findUserById (Integer id);
 
 //    TODO: create new user
     UserDto createNewUser(CreateUserDto createUserDto);
+
+//    TODO: delete user by id
+    Integer deleteUserById(Integer id);
+//    TODO: updated isDeleted status
+    Integer updateIsDeletedStatus(Integer id,boolean status);
 
 }
