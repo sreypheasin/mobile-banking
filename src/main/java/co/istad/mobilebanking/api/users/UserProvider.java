@@ -56,4 +56,14 @@ public class UserProvider {
             WHERE("id = #{id}");
         }}.toString();
     }
+
+//    TODO: Update user by Id
+    public String buildUpdateById(){
+        return new SQL(){{
+            UPDATE(tableName);
+            SET("name = #{u.name}" );
+            SET("gender = #{u.gender}");
+            WHERE("id = #{u.id}");
+        }}.toString();
+    }
 }

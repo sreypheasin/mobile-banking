@@ -1,6 +1,7 @@
 package co.istad.mobilebanking.api.users;
 
 import co.istad.mobilebanking.api.users.web.CreateUserDto;
+import co.istad.mobilebanking.api.users.web.UpdateUserDto;
 import co.istad.mobilebanking.api.users.web.UserDto;
 import com.github.pagehelper.ISelect;
 import com.github.pagehelper.PageHelper;
@@ -67,6 +68,18 @@ public class UserServiceImp implements UserService{
         if(isFound){
             userMapper.updateIsDeleteById(id,status);
             return id;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d, not found!",id));
+    }
+
+//    Update user
+    @Override
+    public UserDto updateUserById(Integer id, UpdateUserDto updateUserDto) {
+        if(userMapper.isExisted(id)){
+            User user = userMapStruct.updateUserDtoToUser(updateUserDto);
+            user.setId(id);
+            userMapper.updateUserById(user);
+            return this.findUserById(id);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d, not found!",id));
     }

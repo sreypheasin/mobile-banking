@@ -39,7 +39,7 @@ public class UserRestController {
         return BaseRest.builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
-                .message("User not found!")
+                .message("User has been found!")
                 .timestamp(LocalDateTime.now())
                 .data(userService.findUserById(id))
                 .build();
@@ -73,7 +73,7 @@ public class UserRestController {
     }
 
 //   Update is_deleted status
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/is-deleted")
     public BaseRest<?> updateIsDeletedStatus(@PathVariable  Integer id, @RequestBody IsDeletedDto dto){
 
         return BaseRest.builder()
@@ -82,6 +82,19 @@ public class UserRestController {
                 .message("Updated successfully...!")
                 .timestamp(LocalDateTime.now())
                 .data(userService.updateIsDeletedStatus(id, dto.status()))
+                .build();
+    }
+
+//    Update user
+    @PutMapping("/{id}")
+    public BaseRest<?> updateUserById(@PathVariable Integer id, @RequestBody UpdateUserDto updateUserDto){
+        UserDto userDto = userService.updateUserById(id,updateUserDto);
+        return BaseRest.builder()
+                .status(true)
+                .code(HttpStatus.OK.value())
+                .message("Users have updated successfully!")
+                .timestamp(LocalDateTime.now())
+                .data(userDto)
                 .build();
     }
 }

@@ -46,4 +46,9 @@ public interface UserMapper {
 //    TODO: Updated status is_deleted
     @UpdateProvider(type = UserProvider.class, method = "buildUpdateIsDeletedSql")
     void updateIsDeleteById(@Param("id") Integer id, @Param("status") boolean status);
+
+//    Update user
+    @UpdateProvider(type = UserProvider.class, method = "buildUpdateById")
+    @ResultMap("userResult")
+    void updateUserById(@Param("u") User user);
 }
