@@ -18,19 +18,22 @@ import java.time.LocalDateTime;
 public class UserRestController {
     private final UserService userService;
 
-//    TODO: Find all users
+//   Find all users
     @GetMapping
-    public BaseRest<?> finaAll(){
-        var userDtoList = userService.findAll();
+    public BaseRest<?> finaAll(
+            @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(name = "limit", required = false, defaultValue = "20") int limit
+//           @RequestParam(name = "name", required = false, defaultValue = "") String name
+    ){
         return BaseRest.builder()
                 .status(true)
                 .code(HttpStatus.OK.value())
-                .message("User found")
-                .data(userDtoList)
+                .message("User has been found!")
+                .timestamp(LocalDateTime.now())
+                .data(userService.findAll(page,limit))
                 .build();
-
     }
-//    TODO: Find user by id
+//    Find user by id
     @GetMapping("/{id}")
     public BaseRest<?> findUserById(@PathVariable Integer id){
         return BaseRest.builder()
@@ -41,7 +44,10 @@ public class UserRestController {
                 .data(userService.findUserById(id))
                 .build();
     }
-//    TODO: create new user
+
+//    pagination
+
+//   create new user
     @PostMapping
     public BaseRest<?> createNewUser(@RequestBody @Valid CreateUserDto createUserDto){
 //        log.info("createUserDto: {}",createUserDto);
@@ -54,7 +60,7 @@ public class UserRestController {
                 .build();
     }
 
-//    TODO: Delete user by id
+//   Delete user by id
     @DeleteMapping("/{id}")
     public BaseRest<?> deleteUserById(@PathVariable Integer id){
         return BaseRest.builder()
@@ -66,7 +72,7 @@ public class UserRestController {
                 .build();
     }
 
-//    TODO: Update is_deleted status
+//   Update is_deleted status
     @PutMapping("/{id}")
     public BaseRest<?> updateIsDeletedStatus(@PathVariable  Integer id, @RequestBody IsDeletedDto dto){
 

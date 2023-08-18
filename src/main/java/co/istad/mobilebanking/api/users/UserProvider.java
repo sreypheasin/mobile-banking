@@ -12,6 +12,8 @@ public class UserProvider {
         return new SQL(){{
             SELECT("*");
             FROM(tableName);
+            WHERE("is_deleted = FALSE");
+            ORDER_BY("id DESC");
         }}.toString();
     }
 

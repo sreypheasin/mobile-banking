@@ -1,6 +1,7 @@
 package co.istad.mobilebanking.api.users;
 
 import co.istad.mobilebanking.api.users.User;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +23,7 @@ public interface UserMapper {
                     @Result(property = "studentCardId", column = "student_card_id"),
     }
     )
-    List<User> selectAllUsers();
+    List <User> select();
 //TODO: Find User by Id
     @ResultMap("userResult")
     @SelectProvider(type = UserProvider.class, method = "buildFindUserByIdSql")

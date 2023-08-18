@@ -2,6 +2,9 @@ package co.istad.mobilebanking.api.users;
 
 import co.istad.mobilebanking.api.users.web.CreateUserDto;
 import co.istad.mobilebanking.api.users.web.UserDto;
+import com.github.pagehelper.ISelect;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,10 +24,9 @@ public class UserServiceImp implements UserService{
 //    TODO: Find
 //    Find all user
     @Override
-    public List<UserDto> findAll() {
-        List <User> users = userMapper.selectAllUsers();
-//        log.info("users: {}",users);
-        return userMapStruct.modelToDto(users);
+    public PageInfo<UserDto> findAll(int page, int limit) {
+        PageInfo <User> userPageInfo = PageHelper.startPage( page ,limit).doSelectPageInfo(userMapper::select);
+        return userMapStruct.pageInfoUserTOPageInfoUserDto(userPageInfo);
     }
 
 //    Find user by id

@@ -2,13 +2,14 @@ package co.istad.mobilebanking.api.users;
 
 import co.istad.mobilebanking.api.users.web.CreateUserDto;
 import co.istad.mobilebanking.api.users.web.UserDto;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
 public interface UserService {
 
 //    TODO: Find
-    List<UserDto> findAll();
+    PageInfo<UserDto> findAll(int page, int limit);
     UserDto findUserById (Integer id);
 
 //    TODO: create new user
