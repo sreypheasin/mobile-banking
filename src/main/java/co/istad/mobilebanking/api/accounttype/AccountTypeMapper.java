@@ -1,11 +1,10 @@
 package co.istad.mobilebanking.api.accounttype;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.SelectProvider;
+import co.istad.mobilebanking.api.accounttype.web.AccountTypeDto;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Optional;
 
 // repository
 @Mapper
@@ -18,4 +17,26 @@ public interface AccountTypeMapper {
 //            }
 //    )
     List<AccountTypes> selectAllAccountTypes();
+
+//    TODO: SelectById
+    @SelectProvider(type = AccountTypeProvider.class, method = "buildSelectByIdSql")
+    Optional<AccountTypes> selectById(@Param("id") Integer id);
+
+//    TODO: deleteById
+    @Select("SELECT EXISTS(SELECT * FROM account_types WHERE id = #{id})")
+    boolean isExisted(@Param("id") Integer id);
+    @DeleteProvider(type = AccountTypeProvider.class, method = "buildDeleteById")
+    void deleteById (@Param("id") Integer id);
+
+//    TODO: updateById
+    @UpdateProvider(type = AccountTypeProvider.class, method = "buildUpdateById")
+    void updateById(@Param("act") AccountTypes accountTypes);
+
+//    insertAccountType
+
+    @InsertProvider(type = AccountTypeProvider.class, method = "buildInsertSql")
+    @Options(useGeneratedKeys = true, keyColumn = "id",keyProperty = "id")
+    void insert(@Param("act") AccountTypes accountTypes);
+
+
 }

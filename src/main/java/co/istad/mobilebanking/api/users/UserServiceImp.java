@@ -58,8 +58,6 @@ public class UserServiceImp implements UserService{
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d, not found!",id));
     }
 
-
-
     //    TODO: Update status is_deleted
     @Override
     public Integer updateIsDeletedStatus(Integer id,boolean status) {

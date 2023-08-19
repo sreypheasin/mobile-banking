@@ -49,6 +49,5 @@ public interface UserMapper {
 
 //    Update user
     @UpdateProvider(type = UserProvider.class, method = "buildUpdateById")
-    @ResultMap("userResult")
     void updateUserById(@Param("u") User user);
 }

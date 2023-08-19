@@ -9,4 +9,6 @@ import java.util.List;
 public interface AccountTypeMapStruct {
 //    TODO : convert Model to DTO
  List<AccountTypeDto> ModelToDto(List<AccountTypes> model);
+ AccountTypeDto accountTypeToAccountTypeDto (AccountTypes accountTypes);
+ AccountTypes accountTypeDtoToAccountType (AccountTypeDto accountTypeDto);
 }
